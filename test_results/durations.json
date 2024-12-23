@@ -1,0 +1,14 @@
+{
+    "Testcases": [
+        {
+            "TestSuites": "TestSuites_04_CTS_Match_Monitor_Detail.py",
+            "Testcase": "TestCase_000_Login",
+            "Duration": "0.89"
+        },
+        {
+            "TestSuites": "TestSuites_04_CTS_Match_Monitor_Detail.py",
+            "Testcase": "TestCase_001_Verify_Correct_Data_Match_Monitor_Detail",
+            "Duration": "28.34"
+        }
+    ]
+}
