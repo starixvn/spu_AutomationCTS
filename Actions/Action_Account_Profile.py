@@ -167,7 +167,8 @@ class Account_Profile(Action.Common):
             CurrecyUserNameNotUnique = self.utils.read_cell(df,indexUserNameNotUnique,2).strip()
             LevelUserNameNotUnique = self.utils.read_cell(df,indexUserNameNotUnique,3).strip()
             SubscriberUserNameNotUnique = self.utils.read_cell(df,indexUserNameNotUnique,4).strip()
-            LastLoginUserNameNotUnique = self.utils.read_cell(df,indexUserNameNotUnique,5).strip()
+            LastLoginUserNameNotUnique0 = self.utils.read_cell(df,indexUserNameNotUnique,5).strip() # 'Feb 03, 2025 22:30'
+            LastLoginUserNameNotUnique = ' '.join(LastLoginUserNameNotUnique0.split()[:3])  # Takes first 3 parts 'Feb 03, 2025'
 
             print(indexUserNameNotUnique,CurrecyUserNameNotUnique, LevelUserNameNotUnique, SubscriberUserNameNotUnique, LastLoginUserNameNotUnique)
             self.utils.page.input(Interface["account_profile"]["txtInput"], usernameNotUnique)
