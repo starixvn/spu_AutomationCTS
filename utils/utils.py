@@ -57,8 +57,8 @@ class utilities():
         self.context.clear_cookies()
 
     def destroy(self):
-        # self.send_message_to_telegram()
-        self.send_message_to_team()    
+        self.send_message_to_telegram()
+        # self.send_message_to_team()
         if bool(config.setting['isUseBrowser']) :
             if bool(config.setting['isTrace']) :
                 self.context.tracing.stop(path = config.setting['pathTrace'])
