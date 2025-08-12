@@ -59,6 +59,7 @@ class utilities():
     def destroy(self):
         self.send_message_to_telegram()
         # self.send_message_to_team()
+        self.send_message_to_slack()
         if bool(config.setting['isUseBrowser']) :
             if bool(config.setting['isTrace']) :
                 self.context.tracing.stop(path = config.setting['pathTrace'])
@@ -152,6 +153,36 @@ class utilities():
                         "Content": bot_message
                     }
                 self.api.post(url= url, formData = obj)
+                
+    def send_message_to_slack(self):
+        token = config.setting.get('slackToken', '')
+        channel = config.setting.get('slackChannel', '')
+        if token != "" and channel != "":
+            bot_message = self.prepare_message()
+
+            headers = {
+                "Authorization": f"Bearer {token}"
+            }
+
+            channel_id = channel
+            try:
+                if isinstance(channel, str) and channel.startswith("U"):
+                    # Open a DM with the user to obtain a channel id
+                    open_dm_url = "https://slack.com/api/conversations.open"
+                    open_dm_form = {"users": channel}
+                    open_res = self.api.post(url=open_dm_url, header=headers, formData=open_dm_form)
+                    open_json = self.api.extract_response_json(open_res)
+                    if open_json.get("ok") and open_json.get("channel"):
+                        channel_id = open_json["channel"].get("id", channel)
+            except Exception:
+                pass
+
+            post_url = "https://slack.com/api/chat.postMessage"
+            post_form = {
+                "channel": channel_id,
+                "text": bot_message
+            }
+            self.api.post(url=post_url, header=headers, formData=post_form)
                 
     def remove_file(self,path):
         try :
